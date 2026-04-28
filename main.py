@@ -4,7 +4,10 @@ from supabase import create_client
 import sys
 import io
 import os
-import env  # استيراد ملف الإعدادات الخاص بك
+from dotenv import load_dotenv
+
+load_dotenv() # لقراءة الملف
+
 
 # إعداد الترميز للعربية
 if sys.stdout.encoding != 'utf-8':
@@ -13,11 +16,12 @@ if sys.stdout.encoding != 'utf-8':
 app = Flask(__name__)
 
 # جلب البيانات من ملف env.py مباشرة
-app.secret_key = env.SECRET_KEY
-URL = env.SUPABASE_URL
-KEY = env.SUPABASE_KEY
-ADMIN_USER = env.ADMIN_USER
-ADMIN_PASS = env.ADMIN_PASS
+app.secret_key = os.getenv("SECRET_KEY")
+
+URL = os.getenv("SUPABASE_URL")
+KEY = os.getenv("SUPABASE_KEY")
+ADMIN_USER = os.getenv("ADMIN_USER")
+ADMIN_PASS = os.getenv("ADMIN_PASS")
 
 # الاتصال بسوبابيس
 supabase = create_client(URL, KEY)
